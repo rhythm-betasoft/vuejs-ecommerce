@@ -3,37 +3,50 @@ import Toastify from 'toastify-js';
 
 export const useCartStore = defineStore('cart', {
   state: () => ({
-    items: []
+    items: [] // Array of cart items
   }),
   actions: {
     addToCart(item) {
+  
+
+
       const existing = this.items.find(i => i.id === item.id);
       if (existing) {
-        existing.quantity = (existing.quantity || 1) + 1;
-        console.log(`${item.title} quantity updated`, existing); 
+        existing.quantity++;
+        Toastify({
+          text: `${item.title} quantity updated!`,
+          duration: 2000,
+          close: true,
+          gravity: 'top',
+          position: 'right',
+          style: { background: '#4caf50' } 
+        }).showToast();
       } else {
         this.items.push({ ...item, quantity: 1 });
         Toastify({
-          text: `${item.title} added to the cart!`,
-          duration: 3000,
+          text: `${item.title} added to cart!`,
+          duration: 2000,
           close: true,
-          gravity: "top",
-          position: "right",
-          backgroundColor: "#4caf50", 
+          gravity: 'top',
+          position: 'right',
+          style: { background: '#4caf50' }
         }).showToast();
       }
     },
-    removeFromCart(itemId) {
-      const item = this.items.find(i => i.id === itemId);
+    removeFromCart(id) {
+   
+    
+
+      const item = this.items.find(i => i.id === id);
       if (item) {
-        this.items = this.items.filter(i => i.id !== itemId);
+        this.items = this.items.filter(i => i.id !== id);
         Toastify({
-          text: `${item.title} removed from the cart.`,
-          duration: 3000,
+          text: `${item.title} removed from cart!`,
+          duration: 2000,
           close: true,
-          gravity: "top",
-          position: "right",
-          backgroundColor: "#f44336",
+          gravity: 'top',
+          position: 'right',
+          style: { background: '#f44336' }
         }).showToast();
       }
     },

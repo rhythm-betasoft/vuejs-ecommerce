@@ -3,19 +3,22 @@
     <v-sheet class="pa-6">
       <h2 class="text-h6 mb-4 text-center">Login</h2>
 
-      <v-form ref="form" @submit.prevent="submitForm">
-       
+      <v-form @submit.prevent="handle()">
         <v-text-field
-          v-model="Email"
-          :rules="[rules.required, rules.email]"
-          label="Email"
+          v-model="UserName"
+          label="Username"
+          outlined
+          dense
+        ></v-text-field>
+        <v-text-field
+          v-model="UserEmail"
+          label="UserEmail"
           outlined
           dense
         ></v-text-field>
 
         <v-text-field
           v-model="Password"
-          :rules="[rules.required, rules.password]"
           label="Password"
           type="password"
           outlined
@@ -31,23 +34,21 @@
 </template>
 
 <script>
+import { authStore } from '../store/authStore'
+
 export default {
   data() {
     return {
-    
-      Email: '',
+      UserName: '',
+      UserEmail: '',
       Password: '',
-      rules: {
-        email: v => /.+@.+\..+/.test(v) || 'Email must be valid',
-        password: v => (v && v.length >= 6) || 'Minimum 6 characters',
-      },
     }
   },
   methods: {
-    submitForm() {
-      if (this.$refs.form.validate()) {
-        alert('Form is valid! Submit logic goes here.')
-      }
+    handle() {
+      const store = authStore(); 
+      store.handleLogin(this.UserName, this.UserEmail, this.Password);
+      console.log("logged in")
     }
   }
 }

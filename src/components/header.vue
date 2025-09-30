@@ -4,17 +4,17 @@
             <v-app-bar-title>Shopify</v-app-bar-title>
         </v-btn>
         <v-spacer style="height: 50px;"></v-spacer>
-        <v-btn :to="{ path: '/' }">
+        <!-- <v-btn :to="{ path: '/' }">
             <v-icon left>mdi-home</v-icon>
             Home
         </v-btn>
         <v-btn style="margin-right: 550px;">
             <v-icon left>mdi-package-variant</v-icon>
             Products
-        </v-btn>
+        </v-btn> -->
 
         <v-btn :to="{ path: '/Favourites' }">
-            <v-icon left style="margin-right: 5px; color:#ee0e59">mdi-heart</v-icon>
+            <v-icon left style="margin-right: 5px; color:#f1467f">mdi-heart</v-icon>
             Favourites
         </v-btn>
 
@@ -38,6 +38,12 @@
                     <v-list-item link :to="{ path: '/Login' }">
                         <v-list-item-title>Login</v-list-item-title>
                     </v-list-item>
+
+                        <v-list-item @click="logout">
+                            <v-list-item-title>Logout</v-list-item-title>
+                        </v-list-item>
+
+
                 </v-list>
             </v-menu>
         </v-btn>
@@ -47,10 +53,19 @@
 </template>
 
 <script>
+import { authStore } from '../store/authStore'; 
 export default {
-    name: "Header",
-    data() {
-        return {};
+  name: "Header",
+  data() {
+    return {};
+  },
+  methods: {
+    logout() {
+      const auth = authStore();
+      auth.handleLogout();
+      console.log("logged out")
     }
+  }
 };
 </script>
+

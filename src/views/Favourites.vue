@@ -35,7 +35,6 @@
 
 <script>
 import { favStore } from '../store/fav';
-
 export default {
   data() {
     const store = favStore(); 
