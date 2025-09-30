@@ -44,7 +44,7 @@
 
 <script>
 import { useCartStore } from '../store/cart.js';
-
+import { authStore } from '../store/authStore';
 export default {
   data() {
     return {
@@ -53,18 +53,22 @@ export default {
   },
   created() {
     const cart = useCartStore();
-    this.cartItems = cart.items;
+    const auth = authStore()
+    const userId =auth.user?.id
+    this.cartItems = cart.items[userId];
     console.log('Cart items on created:', this.cartItems);
   },
   methods: {
     remove(id) {
       const cart = useCartStore();
       cart.removeFromCart(id);
-      this.cartItems = cart.items; 
+      this.cartItems = cart.items[userId]; 
     }
   },
   computed: {
     total() {
+         const auth = authStore()
+    const userId =auth.user?.id
       return this.cartItems.reduce((sum, item) => sum + item.price * item.quantity, 0);
     }
   }

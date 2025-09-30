@@ -1,16 +1,20 @@
 import { defineStore } from 'pinia';
 import Toastify from 'toastify-js';
-
+import { authStore } from './authStore';
 export const useCartStore = defineStore('cart', {
   state: () => ({
-    items: [] // Array of cart items
+    items: {} // Array of cart items
   }),
   actions: {
     addToCart(item) {
-  
 
+      const auth = authStore()
+      const userId = auth.user?.id
 
-      const existing = this.items.find(i => i.id === item.id);
+      if (auth.loggedin && !this.items[userId]) {
+        this.items[userId] = []
+      }
+      const existing = this.items[userId].find(i => i.id === item.id);
       if (existing) {
         existing.quantity++;
         Toastify({
@@ -19,10 +23,10 @@ export const useCartStore = defineStore('cart', {
           close: true,
           gravity: 'top',
           position: 'right',
-          style: { background: '#4caf50' } 
+          style: { background: '#4caf50' }
         }).showToast();
       } else {
-        this.items.push({ ...item, quantity: 1 });
+        this.items[userId].push({ ...item, quantity: 1 });
         Toastify({
           text: `${item.title} added to cart!`,
           duration: 2000,
@@ -34,12 +38,9 @@ export const useCartStore = defineStore('cart', {
       }
     },
     removeFromCart(id) {
-   
-    
-
-      const item = this.items.find(i => i.id === id);
+      const item = this.items[userId].find(i => i.id === id);
       if (item) {
-        this.items = this.items.filter(i => i.id !== id);
+        this.items[userId] = this.items[userId].filter(i => i.id !== id);
         Toastify({
           text: `${item.title} removed from cart!`,
           duration: 2000,
@@ -51,7 +52,7 @@ export const useCartStore = defineStore('cart', {
       }
     },
     clearCart() {
-      this.items = [];
+      this.items[userId] = [];
     }
   },
   persist: true
