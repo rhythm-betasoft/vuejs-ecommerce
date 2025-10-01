@@ -46,7 +46,7 @@ export default {
   methods: {
     removeFromFav(id) {
       const store = favStore();
-      store.remove(id); 
+      store.remove(id);   
     }
   }
 };

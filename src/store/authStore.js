@@ -5,7 +5,7 @@ import axios from "axios";
 
 export const authStore = defineStore('auth', {
   state: () => ({
-    email: '',
+   // email: '',
     password: '',
     refreshToken: '',
     firstName: '',
@@ -14,13 +14,13 @@ export const authStore = defineStore('auth', {
     loggedin: false,
   }),
   actions: {
-    async handleLogin(username,email, password) {
+    async handleLogin(username, password) {
       try {
         console.log("Attempting login with:", username, password);
 
         const response = await axios.post(
           'https://dummyjson.com/auth/login',
-          { username, password, email }
+          { username, password }
         );
 
         const { token, refreshToken, ...userData } = response.data; 
@@ -29,7 +29,6 @@ export const authStore = defineStore('auth', {
         this.refreshToken = refreshToken;
         this.user = userData;
         this.loggedin = true;
-
         toast.success("Login Successful");
         router.push({ name: 'Cart' });
       } catch (error) {
@@ -43,7 +42,6 @@ export const authStore = defineStore('auth', {
       this.refreshToken = '';
       this.user = null;
       this.loggedin = false;
-      toast.info("Logged out successfully");
       router.push({ name: 'Login' });
     }
   },

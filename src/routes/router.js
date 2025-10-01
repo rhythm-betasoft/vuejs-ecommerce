@@ -5,8 +5,7 @@ import Cart from "../views/Cart.vue"
 import SignUp from "../views/SignUp.vue"
 import Login from "../views/Login.vue"
 import Favourites from '../views/Favourites.vue'
-import { components } from "vuetify/dist/vuetify.js";
-// import { components } from "vuetify/dist/vuetify.js";
+import Billing from "../views/Billing.vue"
 const routes=[
     {
         path:"/",
@@ -21,7 +20,8 @@ const routes=[
     {
         path:"/Cart",
         name:"Cart",
-        component:Cart
+        component:Cart,
+        meta: { requiresAuth: true }
     },
     {
         path:"/SignUp",
@@ -37,6 +37,11 @@ const routes=[
         path:"/Favourites",
         name:"Favourites",
         component:Favourites
+    },
+    {
+        path:"/Billing",
+        name:"Billing",
+        component:Billing
     }
 ]
 
@@ -44,5 +49,7 @@ const router=createRouter({
     history:createWebHistory(),
     routes
 })
+
+
 
 export default router;

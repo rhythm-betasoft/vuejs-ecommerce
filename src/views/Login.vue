@@ -10,13 +10,7 @@
           outlined
           dense
         ></v-text-field>
-        <v-text-field
-          v-model="UserEmail"
-          label="UserEmail"
-          outlined
-          dense
-        ></v-text-field>
-
+       
         <v-text-field
           v-model="Password"
           label="Password"
@@ -40,14 +34,13 @@ export default {
   data() {
     return {
       UserName: '',
-      UserEmail: '',
       Password: '',
     }
   },
   methods: {
     handle() {
       const store = authStore(); 
-      store.handleLogin(this.UserName, this.UserEmail, this.Password);
+      store.handleLogin(this.UserName, this.Password);
       console.log("logged in")
     }
   }
