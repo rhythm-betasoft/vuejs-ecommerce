@@ -63,6 +63,7 @@ export default {
                     item.isFavorited = !!fav.arr.find(f => f.id === item.id);
                 });
                 this.arr = res.data;
+                console.log(this.arr)
             });
         }
         ,

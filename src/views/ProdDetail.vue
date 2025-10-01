@@ -1,5 +1,6 @@
-<template>
-  <v-container class="d-flex align-center justify-center py-8 mt-5" >
+<template  >
+<v-main class="abc" >
+  <v-container class="d-flex align-center justify-center py-8 mt-5 " >
     <v-card 
       outlined 
       class="pa-4 rounded-lg shadow-lg" 
@@ -29,6 +30,8 @@
           <v-card-text class="text-justify" style="font-size: 1rem; color: #555; line-height: 1.6;">
             {{ post.description }}
           </v-card-text>
+          <v-card-actions class="d-flex justify-center mt-4"><v-btn style="font-weight: bold;"  @click="addToCart(item)">Add To Cart</v-btn></v-card-actions>
+
           <v-card-actions class="d-flex justify-center mt-4">
             <v-btn 
               @click="$router.back()" 
@@ -44,11 +47,12 @@
       
     </v-card>
   </v-container>
+  </v-main>
 </template>
 
 <script>
 import InnerImageZoom from 'vue-inner-image-zoom';
-
+import { useCartStore } from '../store/cart';
 export default {
   components: {
     InnerImageZoom
@@ -67,11 +71,30 @@ export default {
       this.$api.get(`/products/${postId}`)
         .then(({ data }) => {
           this.post = data;
+          console.log(this.post.rating.rate)
         })
         .catch(err => {
           console.error('Error fetching product details:', err);
         });
+    },
+     addToCart() {
+    if (this.post && this.post.id) {
+      const cart = useCartStore();
+      cart.addToCart(this.post);
+      console.log('Added to cart:', this.post);
+    } else {
+      console.error('Invalid item, cannot add to cart');
     }
+  },
   }
 };
 </script>
+
+
+<style scoped>
+.abc{
+  background-color: rgb(214, 231, 200);
+  height: 100vh;
+  widows: 100vw;
+}
+</style>

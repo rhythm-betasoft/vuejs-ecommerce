@@ -1,10 +1,9 @@
 <template>
-  <h1>Billing Page</h1>
-
+<v-main class="abc">
   <v-container class="d-flex justify-center align-center">
     <v-card style="max-width: 800px; background-color: #ffffff; display: flex; flex-direction: column; min-height: 400px;">
       <v-img 
-        :src="'https://m.media-amazon.com/images/I/71YMhsThAML.jpg'" 
+        :src="'https://images.myparkingsign.com/img/lg/K/thank-you-for-visiting-signature-sign-k2-0716.png'" 
 
         alt="Billing Image"
         width="100%"
@@ -27,6 +26,7 @@
       
     </v-card>
   </v-container>
+  </v-main>
 </template>
 
 
@@ -42,3 +42,12 @@ export default {
   }
 };
 </script>
+
+
+<style scoped>
+.abc{
+  background-color: rgb(214, 231, 200);
+  height: 100vh;
+  widows: 100vw;
+}
+</style>
