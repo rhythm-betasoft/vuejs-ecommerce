@@ -5,7 +5,10 @@
     <v-row v-if="cartItems.length > 0">
       <v-col v-for="item in cartItems" :key="item.id" cols="12" sm="6" md="4">
         <v-card class="mx-auto" max-width="400" outlined>
-          <v-img :src="item.image" height="200px"></v-img>
+
+          <router-link :to="{ name: 'ProdDetail', params: { id: item.id } }">
+            <v-img :src="item.image" height="200px" class="my-1"></v-img>
+          </router-link>
           <v-card-title>{{ item.title }}</v-card-title>
           <v-card-subtitle>Price: ${{ item.price }}</v-card-subtitle>
           <v-card-text>

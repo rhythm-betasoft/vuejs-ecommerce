@@ -10,6 +10,17 @@
             cover></v-carousel-item>
     </v-carousel>
     <v-container style="margin-top: 20px;">
+    <div class="d-flex align-center">
+  <h3 class="mr-4">Filter By</h3>
+  <v-select
+  max-width="200"
+    label="Categories"
+    :items="[`men's clothing`, 'jewelery', 'electronics', `women's clothing`]"
+    v-model="value"
+    outlined
+  />
+</div>
+
         <v-row>
             <v-col v-for="item in arr" :key="item.id" cols="12" sm="6" md="3">
                 <v-card height="370px" elevation="4" style="max-width: 400px;">
@@ -49,7 +60,8 @@ import { favStore } from '../store/fav';
 export default {
     data() {
         return {
-            arr: []
+            arr: [],
+            value:null
         };
     },
     mounted() {
@@ -81,6 +93,18 @@ export default {
         view(id) {
             this.$router.push({ name: 'ProdDetail', params: { id } });
         }
+    },
+    watch:{
+        value(newVal){
+            if(newVal){
+                console.log(newVal)
+                this.arr=this.arr.filter(item=>item.category==newVal)
+            }
+            else{
+                this.getData();
+            }
+        }
     }
 };
+
 </script>

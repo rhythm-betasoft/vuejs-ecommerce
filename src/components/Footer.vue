@@ -21,6 +21,9 @@ export default{
         <v-btn icon href="#">
           <v-icon>mdi-facebook</v-icon>
         </v-btn>
+        <v-btn icon href="#" class="ml-5" >
+              <v-icon>mdi-arrow-up</v-icon>
+        </v-btn>
       </div>
   </v-footer>
 </template>

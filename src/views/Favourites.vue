@@ -26,7 +26,7 @@
 
           <v-card-actions class="d-flex justify-center" style="padding-top: 10px;">
             <v-btn color="red" @click="removeFromFav(item.id)">Remove from Favorites</v-btn>
-          </v-card-actions>
+          </v-card-actions>         
         </v-card>
       </v-col>
     </v-row>

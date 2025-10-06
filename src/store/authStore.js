@@ -2,7 +2,7 @@ import { defineStore } from "pinia";
 import { toast } from "vue3-toastify";
 import router from "../routes/router";
 import axios from "axios";
-
+import Toastify from 'toastify-js';
 export const authStore = defineStore('auth', {
   state: () => ({
    // email: '',
@@ -16,8 +16,6 @@ export const authStore = defineStore('auth', {
   actions: {
     async handleLogin(username, password) {
       try {
-        console.log("Attempting login with:", username, password);
-
         const response = await axios.post(
           'https://dummyjson.com/auth/login',
           { username, password }
@@ -29,7 +27,14 @@ export const authStore = defineStore('auth', {
         this.refreshToken = refreshToken;
         this.user = userData;
         this.loggedin = true;
-        toast.success("Login Successful");
+        Toastify({
+                  text: 'Login Successful',
+                  duration: 2000,
+                  close: true,
+                  gravity: 'top',
+                  position: 'right',
+                  style: { background: '#4caf50' }
+                }).showToast();
         router.push({ name: 'Cart' });
       } catch (error) {
         console.error("Login error:", error);
@@ -42,6 +47,14 @@ export const authStore = defineStore('auth', {
       this.refreshToken = '';
       this.user = null;
       this.loggedin = false;
+       Toastify({
+                  text: 'User Logged Out',
+                  duration: 2000,
+                  close: true,
+                  gravity: 'top',
+                  position: 'right',
+                  style: { background: '#4caf50' }
+                }).showToast();
       router.push({ name: 'Login' });
     }
   },

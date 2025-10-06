@@ -74,15 +74,15 @@ export const useCartStore = defineStore('cart', {
       this.calculateTotal();
     },
 
-    clearCart() {
-      const auth = authStore();
-      const userId = auth.user?.id;
+    // clearCart() {
+    //   const auth = authStore();
+    //   const userId = auth.user?.id;
 
-      if (!userId) return;
+    //   if (!userId) return;
 
-      this.items[userId] = [];
-      this.total = 0; 
-    },
+    //   this.items[userId] = [];
+    //   this.total = 0; 
+    // },
 
     calculateTotal() {
       const auth = authStore();
