@@ -4,9 +4,9 @@
             <v-app-bar-title>Shopify</v-app-bar-title>
         </v-btn>
 
-        <div class="d-flex align-center" style="margin-left: 20px; max-width: 300px;min-width: 200px" margin="20px">
+        <!-- <div class="d-flex align-center" style="margin-left: 20px; max-width: 300px;min-width: 200px" margin="20px">
             <v-text-field label="Search Here"></v-text-field>
-        </div>
+        </div> -->
 
 
         <v-spacer style="height: 5px;"></v-spacer>
@@ -23,7 +23,7 @@
 
         <v-btn>
             <v-icon left>mdi-account</v-icon>
-            User
+            <!-- User -->
             <v-menu activator="parent">
                 <v-list>
 

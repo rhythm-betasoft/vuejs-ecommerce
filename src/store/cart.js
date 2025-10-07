@@ -12,17 +12,7 @@ export const useCartStore = defineStore('cart', {
       const auth = authStore();
       const userId = auth.user?.id;
 
-      if (!auth.loggedin || !userId) {
-        Toastify({
-          text: 'You must be logged in to add items to the cart.',
-          duration: 2000,
-          close: true,
-          gravity: 'top',
-          position: 'right',
-          style: { background: '#f44336' }
-        }).showToast();
-        return;
-      }
+     
 
       if (!Array.isArray(this.items[userId])) {
         this.items[userId] = [];

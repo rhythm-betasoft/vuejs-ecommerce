@@ -1,5 +1,14 @@
 <template>
-  <v-card class="mx-auto" width="400" elevation="4" style="margin-top: 100px;">
+<v-row>
+ <v-col cols="12" md="8" class=" d-flex align-center justify-center"
+        style="background-color: #f5f5f5; background-size: cover; background-repeat: no-repeat;">
+        <v-img
+          src="https://images.soleretriever.com/blog/15a53eb58dfcf6d677f4a27bb19db29ab9d777ef-1070x760.png?quality=85&fit=clip&auto=format&width=1600"
+          max-width="100%" max-height="100%" class="rounded elevation-2"></v-img>
+      </v-col>
+
+  <v-col cols="12" md="4">
+    <v-card class="mx-auto" width="400" elevation="4" style="margin-top: 100px;">
     <v-sheet class="pa-6">
       <h2 class="text-h6 mb-4 text-center">Register</h2>
 
@@ -24,6 +33,10 @@
 
     </v-sheet>
   </v-card>
+  </v-col>
+</v-row>
+
+  
 </template>
 
 <script>
