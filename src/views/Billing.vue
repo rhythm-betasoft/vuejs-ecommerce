@@ -1,174 +1,163 @@
-<template>
-  <v-main class="abc">
-    <v-row class="mx-5">
-      <v-col cols="12" md="7">
-        <v-card elevation="8" class="pa-6 rounded-lg mt-5">
-          <v-img
-            src="https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcQF48Xs6uxMxNnqf2fDEe52yIwEOrmUouGa5gp5hBdk1Fy7mm0EWQt3T5w&s"
-            alt="Billing Image" height="280" class="mb-6 rounded-lg" contain />
+  <template>
+    <v-container class="py-10">
+      <h1 class="text-h4 mb-6">Billing</h1>
 
-          <div class="text-center mb-6">
-            <h1 class="text-h4 font-weight-bold mb-2">
-              Your Total Amount is: <span class="text-primary">${{ total.toFixed(2) }}</span>
-            </h1>
-          </div>
-
-          <div class="d-flex flex-column align-center mb-6">
-          <v-text-field v-model="couponCode" label="Enter Coupon Code" outlined dense clearable class="mb-4"
-            hide-details min-width="300px"></v-text-field>
-            <v-card-actions>
-           <v-btn
-    color="primary"
-    rounded
-    class="mb-6"
-    @click="applyCoupon"
-    style="width: 130px; align-self: center;"
-  >
-    Apply Coupon
-  </v-btn>
-  </v-card-actions>
-          </div>
-            <div v-if="discount > 0" class="discount-info mb-6 text-center">
-              <p class="text-subtitle-1 mb-1">
-                Discount Applied: <span class="text-success">- ${{ discount.toFixed(2) }}</span>
-              </p>
-              <p class="text-h5 font-weight-bold">
-                Final Amount: <span class="text-primary">${{ finalAmount.toFixed(2) }}</span>
-              </p>
-            </div>
-       
-
-          <h4 class="mb-4 font-weight-medium">Choose Payment Method:</h4>
-
-          <v-row dense>
-            <v-col cols="12" md="6" class="mb-3">
-              <v-btn block color="grey lighten-3" class="text-body-1 font-weight-medium" elevation="1" rounded>
-                Cash On Delivery / UPI
-              </v-btn>
-            </v-col>
-
-            <v-col cols="12" md="6" class="mb-3">
-              <v-btn block color="success" dark elevation="2" rounded>
-                Credit Card <small class="ml-2 font-italic">[up to 30% OFF!]</small>
-              </v-btn>
-            </v-col>
-
-            <v-col cols="12" md="6" class="mb-3">
-              <v-btn block color="grey lighten-3" class="text-body-1 font-weight-medium" elevation="1" rounded>
-                Debit Card
-              </v-btn>
-            </v-col>
-
-            <v-col cols="12" md="6" class="mb-3">
-              <v-btn block color="success" dark elevation="2" rounded>
-                Wallets / UPI <small class="ml-2 font-italic">[up to 15% OFF!]</small>
-              </v-btn>
-            </v-col>
-          </v-row>
-        </v-card>
-      </v-col>
-
-
-      <v-col cols="12" md="4" class="d-none d-md-flex flex-column" style="margin-left: 80px;">
-
-        <div class="text-center mb-4">
-          <h4 class="font-weight-bold">You May Also Like</h4>
-        </div>
-
-        <v-row dense>
-          <v-col v-for="(product, index) in randomProducts.slice(0, 5)" :key="index" cols="12">
-            <v-card class="pa-3" elevation="2" rounded style="border-radius: 12px;">
-              <v-row no-gutters align="center">
-                <v-col cols="4">
-                  <router-link :to="{ name: 'ProdDetail', params: { id: product.id } }">
-                    <v-img :src="product.image" alt="Product Image" height="100" contain class="rounded"></v-img>
-                  </router-link>
-                </v-col>
-
-                <v-col cols="8" class="pl-4 d-flex flex-column justify-space-between">
-                  <div>
-                    <div class="font-weight-medium text-truncate" :title="product.title" style="font-size: 1rem;">
-                      {{ product.title }}
-                    </div>
-                    <div class="grey--text text--darken-1 mt-2" style="font-size: 0.95rem;">
-                      ${{ product.price.toFixed(2) }}
-                    </div>
-                  </div>
-                    <v-card-actions>
-                  <v-btn small color="primary" class="mt-3 align-self-start" @click="addToCart(product)">
-                    Add to Cart
+      <v-row>
+        <v-col cols="12" md="8">
+          <table class="w-100 border">
+            <thead>
+              <tr>
+                <th></th>
+                <th>Product</th>
+                <th>Price</th>
+                <th>Quantity</th>
+                <th>Subtotal</th>
+                <th></th>
+              </tr>
+            </thead>
+            <tbody>
+              <tr v-for="item in cartItems" :key="item.id">
+                <td>
+                  <v-btn icon variant="text" @click="remove(item.id)">
+                    <v-icon>mdi-close</v-icon>
                   </v-btn>
-                  </v-card-actions>
-                </v-col>
-              </v-row>
-            </v-card>
-          </v-col>
-        </v-row>
+                </td>
+                <td class="d-flex align-center">
+                  <v-img :src="item.image" width="70" height="70" class="mr-3"></v-img>
+                  <div>
+                    <div class="text-subtitle-1 font-weight-medium">{{ item.title }}</div>
+                    <div class="text-body-2 text--secondary">{{ item.category }}</div>
+                  </div>
+                </td>
+                <td>₹{{ item.price.toFixed(2) }}</td>
+                <td>
+                  <div class="qty-box">
+                    <v-btn icon variant="text" size="small" @click="decreaseQty(item)">-</v-btn>
+                    <span>{{ item.quantity }}</span>
+                    <v-btn icon variant="text" size="small" @click="increaseQty(item)">+</v-btn>
+                  </div>
+                </td>
+                <td>₹{{ (item.price * item.quantity).toFixed(2) }}</td>
 
-      </v-col>
+              </tr>
+              <tr v-if="cartItems.length === 0">
+                <td colspan="6" class="text-center py-8">Your cart is empty.</td>
+              </tr>
+            </tbody>
+          </table>
 
+        </v-col>
 
-    </v-row>
-  </v-main>
-</template>
+        <v-col cols="12" md="4">
+          <div class="border pa-6">
+            <h3 class="text-h6 mb-4 font-weight-medium">Cart totals</h3>
+            <div class="d-flex justify-space-between mb-3">
+              <span>Subtotal</span><span>₹{{ total.toFixed(2) }}</span>
+            </div>
+            <v-divider></v-divider>
+            <div class="my-3">
+              <div>Shipping</div>
+              <small class="text-grey">
+                Enter your address to view shipping options.<br />
 
-<script>
-import axios from 'axios';
-import { useCartStore } from '../store/cart.js';
+              </small>
+            </div>
+            <v-divider></v-divider>
+            <div class="d-flex justify-space-between mt-4 mb-6 font-weight-medium">
+              <span>Total</span><span>₹{{ total.toFixed(2) }}</span>
+            </div>
 
-export default {
-  name: 'BillingAndProducts',
+        
 
-  data() {
-    return {
-      couponCode: '',
-      discount: 0,
-      coupons: {
-        SAVE10: 10,
-        SAVE20: 20,
+            <div class="d-flex flex-column" style="gap:10px;">
+              <v-btn block color="primary" class="white--text" @click="openAllLinks" :disabled="!hasAnyLink">
+                Open All Item Payment Links
+              </v-btn>
+             
+            </div>
+          </div>
+        </v-col>
+      </v-row>
+    </v-container>
+  </template>
+
+  <script>
+  import { useCartStore } from '../store/cart'
+  import { authStore } from '../store/authStore'
+
+  export default {
+    data() {
+      return {
+        stripeLinks: {
+          1: 'https://buy.stripe.com/test_7sY00ld5gdk3cU76i0ebu03', 
+          2: 'https://buy.stripe.com/test_9B628taX83Jt5rFaygebu02', 
+          3: 'https://buy.stripe.com/test_6oU28taX83Jt3jxdKsebu04',
+          4: 'https://buy.stripe.com/test_6oU6oJghs93N9HV9ucebu05',
+          5: 'https://buy.stripe.com/test_bJebJ31my0xh2ft49Sebu06',
+          6: 'https://buy.stripe.com/test_4gM7sNe9k1Bl5rFfSAebu07',
+          7: 'https://buy.stripe.com/test_7sY5kF4yKdk3f2f0XGebu08',
+          8: 'https://buy.stripe.com/test_4gM00l0iua7R1bpgWEebu09',
+          9: 'https://buy.stripe.com/test_9B65kFaX80xh07l8q8ebu0a',
+          10: 'https://buy.stripe.com/test_28E6oJfdo93N7zNbCkebu0b'
+        }
+      }
+    },
+    computed: {
+      cart() {
+        return useCartStore()
       },
-      randomProducts: [],
-    };
-  },
-
-  computed: {
-    total() {
-      const cart = useCartStore();
-      return cart.total;
-    },
-    finalAmount() {
-      return this.total - this.discount;
-    },
-  },
-
-  methods: {
-    async fetchRandomProducts() {
-      try {
-        const response = await axios.get('https://fakestoreapi.com/products?limit=10');
-        this.randomProducts = response.data;
-      } catch (error) {
-        console.error('Error fetching random products:', error);
+      auth() {
+        return authStore()
+      },
+      userId() {
+        return this.auth.user?.id
+      },
+      cartItems() {
+        const uid = this.userId
+        return uid && Array.isArray(this.cart.items[uid]) ? this.cart.items[uid] : []
+      },
+      total() {
+        return this.cartItems.reduce((sum, i) => sum + i.price * i.quantity, 0)
+      },
+      hasAnyLink() {
+        return this.cartItems.some(item => !!this.getStripeLink(item.id))
       }
     },
-    applyCoupon() {
-      const code = this.couponCode.trim().toUpperCase();
-      const percent = this.coupons[code] || 0;
-      this.discount = (this.total * percent) / 100;
-    },
-    addToCart(product) {
-      if (product && product.id) {
-        const cart = useCartStore();
-        cart.addToCart(product);
-        console.log('Added to cart:', product);
-      } else {
-        console.error('Invalid item, cannot add to cart');
+    methods: {
+      getStripeLink(id) {
+        return this.stripeLinks[id] || null
+      },
+      remove(id) {
+        this.cart.removeFromCart(id)
+      },
+      increaseQty(i) {
+        i.quantity++
+        this.cart.calculateTotal()
+      },
+      decreaseQty(i) {
+        if (i.quantity > 1) {
+          i.quantity--
+          this.cart.calculateTotal()
+        }
+      },
+      openAllLinks() {
+        this.cartItems.forEach(item => {
+          const link = this.getStripeLink(item.id)
+          if (link) window.open(link, '_blank')
+        })
+      },
+      refresh() {
+        this.cart.calculateTotal()
       }
-    },
+    }
+  }
+  </script>
 
-  },
-
-  mounted() {
-    this.fetchRandomProducts();
-  },
-};
-</script>
+  <style scoped>
+  .border { border: 1px solid #e6e6e6; }
+  th, td { padding: 18px 20px; border-bottom: 1px solid #f0f0f0; text-align: left; vertical-align: middle; }
+  th { font-weight: 600; background: #f9f9f9; }
+  .qty-box { display: flex; align-items: center; border: 1px solid #ccc; width: 110px; justify-content: space-between; padding: 2px 6px; }
+  .underline { text-decoration: underline; cursor: pointer; }
+  .pa-6 { padding: 24px; }
+  </style>

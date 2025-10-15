@@ -61,7 +61,7 @@
           <div class="d-flex justify-space-between mt-4 mb-6 font-weight-medium">
             <span>Total</span><span>${{ total.toFixed(2) }}</span>
           </div>
-          <v-btn block color="black" class="text-white py-4 text-uppercase">Proceed to Checkout</v-btn>
+          <v-btn block :to="{path:'Billing'}" color="black" class="text-white py-4 text-uppercase">Proceed to Checkout</v-btn>
         </div>
       </v-col>
     </v-row>
@@ -77,7 +77,8 @@ export default {
     return { cartItems: [] }
   },
   created() {
-    const auth = authStore(), cart = useCartStore()
+    const auth = authStore(),
+     cart = useCartStore()
     if (!auth.loggedin) this.$router.push({ name: 'Login' })
     const userId = auth.user?.id
     this.cartItems = userId && Array.isArray(cart.items[userId]) ? cart.items[userId] : []
@@ -93,8 +94,8 @@ export default {
       cart.removeFromCart(id)
       this.cartItems = this.cartItems.filter(i => i.id !== id)
     },
-    increaseQty(i) { i.quantity++; this.updateCart(i) },
-    decreaseQty(i) { if (i.quantity > 1) { i.quantity--; this.updateCart(i) } },
+    increaseQty(i) { i.quantity++; },
+    decreaseQty(i) { if (i.quantity > 1) { i.quantity--; } },
     
   }
 }

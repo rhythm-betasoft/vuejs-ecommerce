@@ -73,6 +73,7 @@ export default {
             this.$api.get('/products').then((res) => {
                 res.data.forEach(item => {
                     item.isFavorited = !!fav.arr.find(f => f.id === item.id);
+                    console.log(this.arr);
                 });
                 this.arr = res.data;
                 console.log(this.arr)
