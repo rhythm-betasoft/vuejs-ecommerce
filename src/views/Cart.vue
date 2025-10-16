@@ -37,10 +37,6 @@
             </tr>
           </tbody>
         </table>
- 
-        <div class="text-right mt-5">
-          <v-btn color="#777" class="text-white text-uppercase px-6 py-3">Update Cart</v-btn>
-        </div>
       </v-col>
  
       <v-col cols="12" md="4">
@@ -50,13 +46,7 @@
             <span>Subtotal</span><span>${{ total.toFixed(2) }}</span>
           </div>
           <v-divider></v-divider>
-          <div class="my-3">
-            <div>Shipping</div>
-            <small class="text-grey">
-              Enter your address to view shipping options.<br />
-              <span class="underline">Calculate shipping</span>
-            </small>
-          </div>
+     
           <v-divider></v-divider>
           <div class="d-flex justify-space-between mt-4 mb-6 font-weight-medium">
             <span>Total</span><span>${{ total.toFixed(2) }}</span>

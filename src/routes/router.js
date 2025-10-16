@@ -6,6 +6,7 @@ import SignUp from "../views/SignUp.vue"
 import Login from "../views/Login.vue"
 import Favourites from '../views/Favourites.vue'
 import Billing from "../views/Billing.vue"
+import Orders from "../views/Orders.vue"
 const routes=[
     {
         path:"/",
@@ -42,6 +43,11 @@ const routes=[
         path:"/Billing",
         name:"Billing",
         component:Billing
+    },
+    {
+        path:"/Orders",
+        name:"Orders",
+        component:Orders
     }
 ]
 

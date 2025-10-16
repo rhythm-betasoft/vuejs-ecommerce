@@ -41,6 +41,10 @@
                         <v-list-item-title>Logout</v-list-item-title>
                     </v-list-item>
 
+                     <v-list-item :to="{path:'/Orders'}">
+                        <v-list-item-title>My Orders</v-list-item-title>
+                    </v-list-item>
+
 
                 </v-list>
             </v-menu>
